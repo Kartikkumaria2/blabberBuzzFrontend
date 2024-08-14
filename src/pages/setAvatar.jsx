@@ -60,7 +60,7 @@
             async function caller() {
                 const data = [];
                 for (let i = 0; i < 4; i++) {
-                    const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}?apikey=nIl68GaQq9XTcu`);
+                    const image = await axios.get(`${api}/Starcrasher.png?apikey=nIl68GaQq9XTcu`);
                     data.push(response);
                 }
                 console.log(avatars);
