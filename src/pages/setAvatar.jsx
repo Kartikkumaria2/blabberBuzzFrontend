@@ -61,8 +61,7 @@
                 const data = [];
                 for (let i = 0; i < 4; i++) {
                     const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}?apikey=nIl68GaQq9XTcu`);
-                    const buffer = new Buffer(image.data);
-                    data.push(buffer.toString("base64"));
+                    data.push(response);
                 }
                 console.log(avatars);
                 setAvatars(data);
@@ -86,15 +85,17 @@
              </div>
              <div className="avatars">
                  {
-                         avatars.map((avatar,index)=>{
-                             return(
-                                 <div key ={index} className = {`avatar ${selectedAvatar === index?"selected":""}`}>
-                                     <img src = {`data:image/svg+xml;base64,${avatar}`} alt = ""
-                                     onClick={()=>{setSelectedAvatar(index)}}
-                                     />
-                                 </div>
-                             )
-                         })
+                         avatars.map((avatar, index) => (
+                    <div
+                        key={index}
+                        className={`avatar ${selectedAvatar === index ? "selected" : ""}`}
+                        onClick={() => setSelectedAvatar(index)}
+                    >
+                        <div
+                            dangerouslySetInnerHTML={{ __html: avatar }}
+                        />
+                    </div>
+                )
                  }
              </div>
              <button className = 'submit-btn' onClick = {setProfilePicture}>set as Profile Picture</button>
