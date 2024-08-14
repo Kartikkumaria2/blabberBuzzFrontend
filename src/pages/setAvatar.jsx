@@ -7,7 +7,7 @@
     import axios from 'axios'
     import { avatarRoute, setAvatarRoute } from "../utils/APIRoutes";
     import { Buffer } from "buffer";
-    
+
 
 
 
@@ -19,9 +19,9 @@
       }
 
     function Avatar() {
-        const api = "https://api.multiavatar.com/";
+        const api = "https://api.multiavatar.com";
         const navigate = useNavigate();
-         
+
 
         const [avatars,setAvatars] = useState([]);
         const [isLoading,setIsLoading] = useState(true);
@@ -42,7 +42,7 @@
                 const{data} = await axios.post(`${avatarRoute}/${user._id}`,{
                     image:avatars[selectedAvatar],
                 })
-                
+
                 if(data.isSet){
                     user.isAvatarSet = true;
                     user.avatarImage = data.image;
@@ -60,17 +60,18 @@
             async function caller() {
                 const data = [];
                 for (let i = 0; i < 4; i++) {
-                    const image = await axios.get(`${api}/Starcrasher.png?apikey=nIl68GaQq9XTcu`);
-                    data.push(response);
+                    const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}?apikey=nIl68GaQq9XTcu`);
+                    const buffer = new Buffer(image.data);
+                    data.push(buffer.toString("base64"));
                 }
                 console.log(avatars);
                 setAvatars(data);
                 setIsLoading(false);
             }
-        
+
             caller();
         }, []);
-        
+
 
     return (
         <>
@@ -85,26 +86,24 @@
              </div>
              <div className="avatars">
                  {
-                         avatars.map((avatar, index) => (
-                    <div
-                        key={index}
-                        className={`avatar ${selectedAvatar === index ? "selected" : ""}`}
-                        onClick={() => setSelectedAvatar(index)}
-                    >
-                        <div
-                            dangerouslySetInnerHTML={{ __html: avatar }}
-                        />
-                    </div>
-                )
+                         avatars.map((avatar,index)=>{
+                             return(
+                                 <div key ={index} className = {`avatar ${selectedAvatar === index?"selected":""}`}>
+                                     <img src = {`data:image/svg+xml;base64,${avatar}`} alt = ""
+                                     onClick={()=>{setSelectedAvatar(index)}}
+                                     />
+                                 </div>
+                             )
+                         })
                  }
              </div>
              <button className = 'submit-btn' onClick = {setProfilePicture}>set as Profile Picture</button>
- 
+
          </Container>
           )}
          <ToastContainer/>
-       
-       
+
+
         </>
     );
     }
@@ -118,7 +117,6 @@
     background-color:#131324;
     height:100vh;
     width:100vw;
-
     .title-container{
         h1{
             color:white;
@@ -162,7 +160,6 @@
       background-color:#4e0eff;
     }
     }
-
     `
 
     export default Avatar ;
