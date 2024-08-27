@@ -1,6 +1,6 @@
 # BlabberBuzz
 
-![Project Screenshot](./Screenshot_2024-08-27_094500.png)
+![Project Screenshot](./picture1.png)
 
 ## Tech Stack
 
